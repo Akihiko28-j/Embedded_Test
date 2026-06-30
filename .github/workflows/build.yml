@@ -34,3 +34,9 @@ jobs:
         with:
           name: converter
           path: converter
+
+      - name: プログラム実行
+        run: ./converter test/input.fps output.fps
+
+      - name: 出力を比較
+        run: cmp output.fps test/expected.fps
