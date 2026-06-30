@@ -44,12 +44,12 @@ jobs:
 
       # ⑧ プログラム実行（ここで止める）
       - name: プログラム実行
-        run: ./converter test/input.fps output.fps
+        run: ./converter test/input.fps convert.fps
 
       # ⑨ output確認（重要）
       - name: output確認
-        run: ls -l output.fps
+        run: ls -l convert.fps
 
       # ⑩ 出力比較（テスト本体）
       - name: 出力を比較
-        run: cmp output.fps test/expected.fps
+        run: cmp convert.fps test/expected.fps
