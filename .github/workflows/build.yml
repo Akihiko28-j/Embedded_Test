@@ -1,7 +1,5 @@
 name: Cビルド
 
-name: Cビルド
-
 on:
   push:
     branches:
