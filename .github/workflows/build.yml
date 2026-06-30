@@ -1,5 +1,7 @@
 name: Cビルド
 
+name: Cビルド
+
 on:
   push:
     branches:
@@ -10,13 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: ソースコードを取得
+        uses: actions/checkout@v4
 
-      - name: ファイル一覧表示
-        run: ls -R
-
-      - name: GCCのバージョン確認
+      - name: GCCのバージョンを表示
         run: gcc --version
 
-      - name: Hello表示
-        run: echo "GitHub Actionsが正常に動いています！"
+      - name: converter_tag.c をコンパイル
+        run: gcc converter_tag.c -o converter
+
+      - name: 成果物を保存
+        uses: actions/upload-artifact@v4
+        with:
+          name: converter
+          path: converter
