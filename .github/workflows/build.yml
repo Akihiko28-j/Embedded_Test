@@ -10,36 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ① ソース取得
       - name: ソースコードを取得
         uses: actions/checkout@v4
 
+      # ② GCC確認
       - name: GCCのバージョンを表示
         run: gcc --version
 
+      # ③ cppcheckインストール
       - name: cppcheckをインストール
         run: |
           sudo apt-get update
           sudo apt-get install -y cppcheck
 
+      # ④ 静的解析
       - name: cppcheckで静的解析
         run: |
           cppcheck --enable=all --inconclusive --std=c99 . 2> cppcheck.txt
           cat cppcheck.txt
 
+      # ⑤ ビルド
       - name: converter_tag.c をコンパイル
         run: gcc converter_tag.c -o converter
 
-      - name: 成果物を保存
-        uses: actions/upload-artifact@v4
-        with:
-          name: converter
-          path: converter
+      # ⑥ ビルド結果確認
+      - name: converter存在確認
+        run: ls -l converter
 
+      # ⑦ テスト入力確認
+      - name: テストファイル確認
+        run: ls -l test
+
+      # ⑧ 実行
       - name: プログラム実行
-        run: ./converter test/input.fps output.fps
+        run: |
+          ./converter test/input.fps output.fps || echo "converter failed"
 
-        - name: output確認（デバッグ）
-        run: ls -l
+      # ⑨ 出力確認（重要）
+      - name: output存在確認
+        run: |
+          ls -l
+          cat output.fps || echo "output.fpsが作成されていない"
 
+      # ⑩ 比較テスト
       - name: 出力を比較
         run: cmp output.fps test/expected.fps
