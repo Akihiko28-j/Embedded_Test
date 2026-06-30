@@ -1,4 +1,4 @@
-name: C Build
+name: Cビルド
 
 on:
   push:
@@ -7,12 +7,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
 
-    - uses: actions/checkout@v4
+      - name: ファイル一覧表示
+        run: ls -R
 
-    - name: Show Files
-      run: ls -R
+      - name: GCCのバージョン確認
+        run: gcc --version
+
+      - name: Hello表示
+        run: echo "GitHub Actionsが正常に動いています！"
