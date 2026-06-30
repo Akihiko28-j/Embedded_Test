@@ -16,6 +16,16 @@ jobs:
       - name: GCCのバージョンを表示
         run: gcc --version
 
+      - name: cppcheckをインストール
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck
+
+      - name: cppcheckで静的解析
+        run: |
+          cppcheck --enable=all --inconclusive --std=c99 . 2> cppcheck.txt
+          cat cppcheck.txt
+
       - name: converter_tag.c をコンパイル
         run: gcc converter_tag.c -o converter
 
