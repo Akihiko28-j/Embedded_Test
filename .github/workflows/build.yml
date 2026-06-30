@@ -38,21 +38,18 @@ jobs:
       - name: converter存在確認
         run: ls -l converter
 
-      # ⑦ テスト入力確認
+      # ⑦ テストファイル確認
       - name: テストファイル確認
         run: ls -l test
 
-      # ⑧ 実行
+      # ⑧ プログラム実行（ここで止める）
       - name: プログラム実行
-        run: |
-          ./converter test/input.fps output.fps || echo "converter failed"
+        run: ./converter test/input.fps output.fps
 
-      # ⑨ 出力確認（重要）
-      - name: output存在確認
-        run: |
-          ls -l
-          cat output.fps || echo "output.fpsが作成されていない"
+      # ⑨ output確認（重要）
+      - name: output確認
+        run: ls -l output.fps
 
-      # ⑩ 比較テスト
+      # ⑩ 出力比較（テスト本体）
       - name: 出力を比較
         run: cmp output.fps test/expected.fps
