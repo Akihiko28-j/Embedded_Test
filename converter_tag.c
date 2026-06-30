@@ -146,7 +146,7 @@ void main( int argc, char* argv[] )
 {
     FILE *inputFp;
     FILE *outputFp;
-    fpos_t fileSize;
+    long fileSize;//fpos_t fileSize;
     int c;
     int i;
     int result;
@@ -239,9 +239,15 @@ void main( int argc, char* argv[] )
         return;
     }
     
-    /* ファイルサイズ取得 */
-    fseek( inputFp, 0, SEEK_END );
-    fgetpos( inputFp, &fileSize );
+
+if (fileSize != CONVERTFILE_SIZE)
+	/* ファイルサイズ取得 */
+	fseek(inputFp, 0, SEEK_END);
+	fileSize = ftell(inputFp);
+	fseek(inputFp, 0, SEEK_SET);
+//    /* ファイルサイズ取得 */
+//    fseek( inputFp, 0, SEEK_END );
+//    fgetpos( inputFp, &fileSize );
     if( fileSize != CONVERTFILE_SIZE )
     {
         printf( "コンバート前のファイルではありません。\n" );
